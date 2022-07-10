@@ -18,7 +18,7 @@ function destroy(reviewId){
     return knex("reviews").where({"review_id":reviewId}).del();
 }
 
-function list(movieId){
+function listReviewsForMovieId(movieId){
     return knex("reviews")
         .join("critics", "critics.critic_id", "reviews.critic_id")
         .select("*")
@@ -26,6 +26,14 @@ function list(movieId){
         .then((data) => {
             return data.map(addCritic)
         })
+}
+function listAllReviews() {
+  return knex("reviews")
+  .join("critics", "critics.critic_id", "reviews.critic_id")
+  .select("*")
+  .then((data) => {
+      return data.map(addCritic)
+  })
 }
 
 function update(updatedReview) {
@@ -56,7 +64,8 @@ function readAddCritic(review_id) {
 
 module.exports = {
     delete: destroy,
-    list,
+    listReviewsForMovieId,
+    listAllReviews,
     update,
     read,
     readAddCritic,

@@ -33,7 +33,9 @@ async function destroy(req, res){
 async function list(req, res){
     const {movieId} = req.params
     if(movieId) {
-        res.json({data: await reviewService.list(movieId)});
+        res.json({data: await reviewService.listReviewsForMovieId(movieId)});
+    }else{
+        res.json({ data: await reviewService.listAllReviews() });
     }
 }
 
